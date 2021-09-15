@@ -2,9 +2,17 @@ import React from "react";
 import { Square } from "./Square";
 import "./Board.scss";
 
-class Board extends React.Component {
-    renderSquare(i: number) {
-        return <Square value={i} />;
+interface BoardState {
+    squares: Array<string | null>;
+}
+interface BoardProps {}
+
+class Board extends React.Component<BoardProps, BoardState> {
+    constructor(props: BoardProps) {
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null),
+        };
     }
 
     /**
@@ -23,6 +31,14 @@ class Board extends React.Component {
         }
 
         return rows;
+    }
+
+    renderSquare(i: number) {
+        return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
+    }
+
+    handleClick(i: number) {
+        // todo
     }
 
     render() {
