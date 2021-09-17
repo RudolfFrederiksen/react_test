@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Board } from "./Board";
 import "./Game.scss";
 
@@ -83,12 +84,11 @@ class Game extends React.Component<GameProps, GameState> {
 
     renderHistory() {
         return this.state.history.map((historyState, idx) => (
-            <li key={idx}>
+            <li key={idx} className={classNames({ selected: this.state.currentStep === idx })}>
                 <button onClick={() => this.goToHistoryState(idx)}>
                     {idx
-                        ? `Jump to move #${idx} ${idx % 2 === 1 ? "X" : "O"} played at (c-${historyState.col}:r-${
-                              historyState.row
-                          }`
+                        ? `Go to move #${idx} ${idx % 2 === 1 ? "X" : "O"}` +
+                          ` played at (c-${historyState.col}:r-${historyState.row})`
                         : "Go to game start"}
                 </button>
             </li>

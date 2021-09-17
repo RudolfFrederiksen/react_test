@@ -13,4 +13,7 @@
 ol,
 ul {
     padding-left: 30px;
+    li.selected {
+        font-weight: bold;
+    }
 }
