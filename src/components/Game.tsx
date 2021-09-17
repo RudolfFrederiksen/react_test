@@ -4,6 +4,7 @@ import "./Game.scss";
 
 interface GameState {
     history: Array<HistoryState>;
+    currentStep: number;
     xIsNext: boolean;
     winner: string | null;
 }
@@ -23,17 +24,18 @@ class Game extends React.Component<GameProps, GameState> {
                     squares: Array(9).fill(null),
                 },
             ],
+            currentStep: 0,
             xIsNext: true,
             winner: null,
         };
     }
 
     handleClick(idx: number) {
-        let history = this.state.history,
+        let history = this.state.history.slice(0, this.state.currentStep + 1),
             squares = history[history.length - 1].squares.slice();
 
         // prevent action if winner defined or square has been played
-        if (!!this.state.winner || squares[idx]) {
+        if (!!this.calculateWinner(squares) || squares[idx]) {
             return;
         }
 
@@ -43,6 +45,7 @@ class Game extends React.Component<GameProps, GameState> {
 
         this.setState({
             history,
+            currentStep: history.length - 1,
             xIsNext: !this.state.xIsNext,
             winner,
         });
@@ -68,11 +71,27 @@ class Game extends React.Component<GameProps, GameState> {
         return null;
     }
 
+    renderHistory() {
+        return this.state.history.map((history, idx) => (
+            <li key={idx}>
+                <button onClick={() => this.goToHistoryState(idx)}>
+                    {idx ? `Jump to move #${idx}` : "Go to game start"}
+                </button>
+            </li>
+        ));
+    }
+
+    goToHistoryState(idx: number) {
+        this.setState({
+            currentStep: idx,
+            xIsNext: idx % 2 === 0,
+        });
+    }
+
     render() {
-        const latestSquare = this.state.history[this.state.history.length - 1].squares,
+        const latestSquare = this.state.history[this.state.currentStep].squares,
             winner = this.state.winner,
             status = winner ? "Winner: " + winner : "Next player: " + (this.state.xIsNext ? "X" : "O");
-
         return (
             <div className="game">
                 <div className="game-board">
@@ -80,7 +99,7 @@ class Game extends React.Component<GameProps, GameState> {
                 </div>
                 <div className="game-info">
                     <div className="status">{status}</div>
-                    <ol>{/* TODO */}</ol>
+                    <ol>{this.renderHistory()}</ol>
                 </div>
             </div>
         );
