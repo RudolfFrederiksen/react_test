@@ -13,22 +13,25 @@ class Board extends React.Component<BoardProps, BoardState> {
      * generate a 3x3 board
      */
     generateBoard() {
-        const rows = [];
-        for (let row = 0; row < 3; row++) {
-            rows.push(
-                <div className="board-row" key={row}>
-                    {this.renderSquare(row * 3)}
-                    {this.renderSquare(row * 3 + 1)}
-                    {this.renderSquare(row * 3 + 2)}
+        const seedArray = Array(3).fill(0);
+        return seedArray.map((item, row) => {
+            return (
+                <div className="board-row" key={`row-${row}`}>
+                    {seedArray.map((val, idx) => this.renderSquare(row, row * 3 + idx))}
                 </div>
             );
-        }
-
-        return rows;
+        });
     }
 
-    renderSquare(i: number) {
-        return <Square index={i} value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
+    renderSquare(row: number, i: number) {
+        return (
+            <Square
+                key={`row-${row}-col-${i}`}
+                index={i}
+                value={this.props.squares[i]}
+                onClick={() => this.props.onClick(i)}
+            />
+        );
     }
 
     render() {

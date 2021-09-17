@@ -11,6 +11,8 @@ interface GameState {
 
 interface HistoryState {
     squares: Array<string | null>;
+    col: number | null;
+    row: number | null;
 }
 
 interface GameProps {}
@@ -22,6 +24,8 @@ class Game extends React.Component<GameProps, GameState> {
             history: [
                 {
                     squares: Array(9).fill(null),
+                    col: null,
+                    row: null,
                 },
             ],
             currentStep: 0,
@@ -41,7 +45,13 @@ class Game extends React.Component<GameProps, GameState> {
 
         squares[idx] = this.state.xIsNext ? "X" : "O";
         const winner = this.calculateWinner(squares);
-        history = history.concat([{ squares }]);
+        history = history.concat([
+            {
+                squares,
+                col: (idx % 3) + 1,
+                row: Math.ceil(idx / 3),
+            },
+        ]);
 
         this.setState({
             history,
@@ -72,10 +82,14 @@ class Game extends React.Component<GameProps, GameState> {
     }
 
     renderHistory() {
-        return this.state.history.map((history, idx) => (
+        return this.state.history.map((historyState, idx) => (
             <li key={idx}>
                 <button onClick={() => this.goToHistoryState(idx)}>
-                    {idx ? `Jump to move #${idx}` : "Go to game start"}
+                    {idx
+                        ? `Jump to move #${idx} ${idx % 2 === 1 ? "X" : "O"} played at (c-${historyState.col}:r-${
+                              historyState.row
+                          }`
+                        : "Go to game start"}
                 </button>
             </li>
         ));
