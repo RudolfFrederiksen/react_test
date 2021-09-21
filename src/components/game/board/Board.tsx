@@ -5,6 +5,7 @@ import "./Board.scss";
 interface BoardState {}
 interface BoardProps {
     squares: Array<string | null>;
+    winner: Array<number> | null;
     onClick: (idx: number) => void;
 }
 
@@ -24,11 +25,13 @@ class Board extends React.Component<BoardProps, BoardState> {
     }
 
     renderSquare(row: number, i: number) {
+        const highlight: boolean = this.props.winner ? this.props.winner.includes(i) : false;
         return (
             <Square
                 key={`row-${row}-col-${i}`}
                 index={i}
                 value={this.props.squares[i]}
+                highlight={highlight}
                 onClick={() => this.props.onClick(i)}
             />
         );

@@ -8,7 +8,7 @@ interface GameState {
     history: Array<HistoryState>;
     currentStep: number;
     xIsNext: boolean;
-    winner: string | null;
+    winner: Array<number> | null;
     orderMoveAsc: boolean;
 }
 
@@ -65,7 +65,7 @@ class Game extends React.Component<GameProps, GameState> {
         });
     }
 
-    calculateWinner(squares: Array<string | null>) {
+    calculateWinner(squares: Array<string | null>): Array<number> | null {
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -79,7 +79,7 @@ class Game extends React.Component<GameProps, GameState> {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                return squares[a];
+                return lines[i];
             }
         }
         return null;
@@ -108,6 +108,7 @@ class Game extends React.Component<GameProps, GameState> {
     goToHistoryState(idx: number) {
         this.setState({
             currentStep: idx,
+            winner: this.calculateWinner(this.state.history[idx].squares),
             xIsNext: idx % 2 === 0,
         });
     }
@@ -125,13 +126,13 @@ class Game extends React.Component<GameProps, GameState> {
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board squares={latestSquare} onClick={(idx) => this.handleClick(idx)} />
+                    <Board squares={latestSquare} winner={winner} onClick={(idx) => this.handleClick(idx)} />
                 </div>
                 <div className="game-info">
                     <div className="status">{status}</div>
                     <div className="history-toggle">
                         <span>History Order : {this.state.orderMoveAsc ? "Ascending" : "Descending"}</span>
-                        <Toggle isActive={this.state.orderMoveAsc} onClick={() => this.toggleHistoryOrder()}/>
+                        <Toggle isActive={this.state.orderMoveAsc} onClick={() => this.toggleHistoryOrder()} />
                     </div>
                     <ol reversed={!this.state.orderMoveAsc}>{this.renderHistory()}</ol>
                 </div>
