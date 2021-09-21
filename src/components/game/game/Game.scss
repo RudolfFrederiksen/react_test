@@ -10,6 +10,15 @@
     }
 }
 
+.history-toggle {
+    display: flex;
+    align-items: center;
+
+    & > span {
+        margin-right: 10px;
+    }
+}
+
 ol,
 ul {
     padding-left: 30px;
