@@ -1,13 +1,15 @@
 import React from "react";
 import classNames from "classnames";
-import { Board } from "./Board";
+import { Board } from "../board/Board";
 import "./Game.scss";
+import Toggle from "../../shared/toggle/Toggle";
 
 interface GameState {
     history: Array<HistoryState>;
     currentStep: number;
     xIsNext: boolean;
     winner: string | null;
+    orderMoveAsc: boolean;
 }
 
 interface HistoryState {
@@ -32,6 +34,7 @@ class Game extends React.Component<GameProps, GameState> {
             currentStep: 0,
             xIsNext: true,
             winner: null,
+            orderMoveAsc: true,
         };
     }
 
@@ -83,7 +86,7 @@ class Game extends React.Component<GameProps, GameState> {
     }
 
     renderHistory() {
-        return this.state.history.map((historyState, idx) => (
+        const $history = this.state.history.map((historyState, idx) => (
             <li key={idx} className={classNames({ selected: this.state.currentStep === idx })}>
                 <button onClick={() => this.goToHistoryState(idx)}>
                     {idx
@@ -93,12 +96,25 @@ class Game extends React.Component<GameProps, GameState> {
                 </button>
             </li>
         ));
+
+        // order desc history
+        if (!this.state.orderMoveAsc) {
+            $history.reverse();
+        }
+
+        return $history;
     }
 
     goToHistoryState(idx: number) {
         this.setState({
             currentStep: idx,
             xIsNext: idx % 2 === 0,
+        });
+    }
+
+    toggleHistoryOrder() {
+        this.setState({
+            orderMoveAsc: !this.state.orderMoveAsc,
         });
     }
 
@@ -113,7 +129,8 @@ class Game extends React.Component<GameProps, GameState> {
                 </div>
                 <div className="game-info">
                     <div className="status">{status}</div>
-                    <ol>{this.renderHistory()}</ol>
+                    <Toggle isActive={this.state.orderMoveAsc} onClick={() => this.toggleHistoryOrder()}></Toggle>
+                    <ol reversed={!this.state.orderMoveAsc}>{this.renderHistory()}</ol>
                 </div>
             </div>
         );
