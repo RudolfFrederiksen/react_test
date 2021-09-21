@@ -122,7 +122,11 @@ class Game extends React.Component<GameProps, GameState> {
     render() {
         const latestSquare = this.state.history[this.state.currentStep].squares,
             winner = this.state.winner,
-            status = winner ? "Winner: " + winner : "Next player: " + (this.state.xIsNext ? "X" : "O");
+            status = winner
+                ? "Winner: " + winner
+                : this.state.history.length === 10 && !winner
+                ? "Draw"
+                : "Next player: " + (this.state.xIsNext ? "X" : "O");
         return (
             <div className="game">
                 <div className="game-board">
