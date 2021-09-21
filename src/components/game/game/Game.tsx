@@ -53,7 +53,7 @@ class Game extends React.Component<GameProps, GameState> {
             {
                 squares,
                 col: (idx % 3) + 1,
-                row: Math.ceil(idx / 3),
+                row: Math.ceil((idx + 1) / 3),
             },
         ]);
 
