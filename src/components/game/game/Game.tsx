@@ -135,8 +135,8 @@ class Game extends React.Component<GameProps, GameState> {
                 <div className="game-info">
                     <div className="status">{status}</div>
                     <div className="history-toggle">
-                        <span>History Order : {this.state.orderMoveAsc ? "Ascending" : "Descending"}</span>
                         <Toggle isActive={this.state.orderMoveAsc} onClick={() => this.toggleHistoryOrder()} />
+                        <span>History Order : {this.state.orderMoveAsc ? "Ascending" : "Descending"}</span>
                     </div>
                     <ol reversed={!this.state.orderMoveAsc}>{this.renderHistory()}</ol>
                 </div>
