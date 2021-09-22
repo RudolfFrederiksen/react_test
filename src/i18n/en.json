@@ -10,5 +10,14 @@
         "WINNER": "Winner:",
         "DRAW": "Draw",
         "NEXT": "Next player:"
+    },
+    "HISTORY": {
+        "SORT": {
+            "LABEL": "History sorting:",
+            "ASC": "Ascending",
+            "DESC": "Descending"
+        },
+        "GO_TO_START": "Go to game start",
+        "GO_TO": "Go to move #{{step}} {{player}} played at (c-{{col}}:r-{{row}})"
     }
 }

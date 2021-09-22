@@ -100,13 +100,18 @@ class Game extends React.Component<GameProps, GameState> {
     }
 
     renderHistory() {
+        const t = this.props.t;
         const $history = this.state.history.map((historyState, idx) => (
             <li key={idx} className={classNames({ selected: this.state.currentStep === idx })}>
                 <button onClick={() => this.goToHistoryState(idx)}>
                     {idx
-                        ? `Go to move #${idx} ${idx % 2 === 1 ? "X" : "O"}` +
-                          ` played at (c-${historyState.col}:r-${historyState.row})`
-                        : "Go to game start"}
+                        ? t("HISTORY.GO_TO", {
+                              step: idx,
+                              player: idx % 2 ? "X" : "O",
+                              col: historyState.col,
+                              row: historyState.row,
+                          })
+                        : t("HISTORY.GO_TO_START")}
                 </button>
             </li>
         ));
@@ -156,7 +161,10 @@ class Game extends React.Component<GameProps, GameState> {
                         <div className="status">{status}</div>
                         <div className="history-toggle">
                             <Toggle isActive={this.state.orderMoveAsc} onClick={() => this.toggleHistoryOrder()} />
-                            <span>History Order : {this.state.orderMoveAsc ? "Ascending" : "Descending"}</span>
+                            <span>
+                                {t("HISTORY.SORT.LABEL")}{" "}
+                                {t(`HISTORY.SORT.${this.state.orderMoveAsc ? "ASC" : "DESC"}`)}
+                            </span>
                         </div>
                         <ol reversed={!this.state.orderMoveAsc}>{this.renderHistory()}</ol>
                     </div>

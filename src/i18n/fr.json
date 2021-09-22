@@ -10,5 +10,14 @@
         "WINNER": "Gagnant :",
         "DRAW": "Partie nulle",
         "NEXT": "Prochain joueur :"
+    },
+    "HISTORY": {
+        "SORT": {
+            "LABEL": "Tri de l'historique :",
+            "ASC": "Ascendant",
+            "DESC": "Descendant"
+        },
+        "GO_TO_START": "Aller au début de partie",
+        "GO_TO": "Aller au coup #{{step}} {{player}} a joué sur (c-{{col}}:l-{{row}})"
     }
 }
