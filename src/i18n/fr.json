@@ -19,5 +19,8 @@
         },
         "GO_TO_START": "Aller au début de partie",
         "GO_TO": "Aller au coup #{{step}} {{player}} a joué sur (c-{{col}}:l-{{row}})"
-    }
+    },
+    "HTML_TEST" : "Bonjour <1>le monde</1> !",
+    "HTML_TEST_other" : "Bonjour <1>les mondes</1> !",
+    "HTML_TITLE" : "Un simple overlay"
 }

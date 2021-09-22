@@ -19,5 +19,8 @@
         },
         "GO_TO_START": "Go to game start",
         "GO_TO": "Go to move #{{step}} {{player}} played at (c-{{col}}:r-{{row}})"
-    }
+    },
+    "HTML_TEST": "Hello <1>world</1>!",
+    "HTML_TEST_other": "Hello <1>worlds</1>!",
+    "HTML_TITLE": "A simple overlay"
 }

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { Board } from "../board/Board";
 import "./Game.scss";
 import Toggle from "../../shared/toggle/Toggle";
-import { WithTranslation, withTranslation } from "react-i18next";
+import { Trans, WithTranslation, withTranslation } from "react-i18next";
 import LangSelector from "../../shared/LangSelector/LangSelector";
 
 interface GameState {
@@ -141,6 +141,8 @@ class Game extends React.Component<GameProps, GameState> {
     render() {
         const t = this.props.t;
 
+        const name = "world";
+
         const latestSquare = this.state.history[this.state.currentStep].squares,
             winner = this.state.winner,
             status = winner
@@ -169,6 +171,15 @@ class Game extends React.Component<GameProps, GameState> {
                         <ol reversed={!this.state.orderMoveAsc}>{this.renderHistory()}</ol>
                     </div>
                 </div>
+
+                {/* pluralisation and tag inclusion test */}
+                <Trans i18nKey="HTML_TEST" count={1}>
+                    Hello <strong title={t("HTML_TITLE")}> world</strong>.
+                </Trans>
+                <br />
+                <Trans i18nKey="HTML_TEST" count={2}>
+                    Hello <strong title={t("HTML_TITLE")}>{{ name }}</strong>.
+                </Trans>
             </div>
         );
     }
