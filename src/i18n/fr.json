@@ -1,6 +1,14 @@
 {
+    "LANG": {
+        "TITLE": "Language sélectionné :",
+        "FR": "Français",
+        "EN": "English"
+    },
     "PAGE_TITLE": "Application de test Morpion",
     "GAME": {
-        "TITLE": "Application de Morpion basique pour faire des tests avec React"
+        "TITLE": "Application basique pour faire des tests avec React",
+        "WINNER": "Gagnant :",
+        "DRAW": "Partie nulle",
+        "NEXT": "Prochain joueur :"
     }
 }

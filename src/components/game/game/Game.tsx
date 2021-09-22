@@ -4,6 +4,7 @@ import { Board } from "../board/Board";
 import "./Game.scss";
 import Toggle from "../../shared/toggle/Toggle";
 import { WithTranslation, withTranslation } from "react-i18next";
+import LangSelector from "../../shared/LangSelector/LangSelector";
 
 interface GameState {
     history: Array<HistoryState>;
@@ -125,16 +126,20 @@ class Game extends React.Component<GameProps, GameState> {
     }
 
     render() {
+        const t = this.props.t;
+
         const latestSquare = this.state.history[this.state.currentStep].squares,
             winner = this.state.winner,
             status = winner
-                ? "Winner: " + winner
+                ? t("GAME.WINNER") + winner // todo: fix winner name
                 : this.state.history.length === 10 && !winner
-                ? "Draw"
-                : "Next player: " + (this.state.xIsNext ? "X" : "O");
+                ? t("GAME.DRAW")
+                : t("GAME.NEXT") + (this.state.xIsNext ? " X" : " O");
         return (
             <div>
-                <h2>{this.props.t("GAME.TITLE")}</h2>
+                <h2>{t("GAME.TITLE")}</h2>
+                <LangSelector />
+
                 <div className="game">
                     <div className="game-board">
                         <Board squares={latestSquare} winner={winner} onClick={(idx) => this.handleClick(idx)} />

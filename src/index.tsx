@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import detector from "i18next-browser-languagedetector";
 
 import enTrans from "./i18n/en.json";
 import frTrans from "./i18n/fr.json";
@@ -10,11 +11,9 @@ import frTrans from "./i18n/fr.json";
 import "./index.scss";
 import Game from "./components/game/game/Game";
 
-i18n.use(initReactI18next) // passes i18n down to react-i18next
+i18n.use(detector)
+    .use(initReactI18next) // passes i18n down to react-i18next
     .init({
-        // the translations
-        // (tip move them in a JSON file and import them,
-        // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
         resources: {
             en: {
                 translation: enTrans,
@@ -23,7 +22,7 @@ i18n.use(initReactI18next) // passes i18n down to react-i18next
                 translation: frTrans,
             },
         },
-        lng: "fr", // if you're using a language detector, do not define the lng option
+        // lng: "fr", // if you're using a language detector, do not define the lng option
         fallbackLng: "en",
 
         interpolation: {

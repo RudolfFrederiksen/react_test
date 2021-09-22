@@ -1,6 +1,14 @@
 {
+    "LANG": {
+        "TITLE": "Selected language:",
+        "FR": "Français",
+        "EN": "English"
+    },
     "PAGE_TITLE": "Tic Tac Toe test app",
     "GAME": {
-        "TITLE": "Basic game app to test various things in React"
+        "TITLE": "Basic application to test various things in React",
+        "WINNER": "Winner:",
+        "DRAW": "Draw",
+        "NEXT": "Next player:"
     }
 }
