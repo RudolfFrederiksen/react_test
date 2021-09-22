@@ -1,11 +1,12 @@
 import React from "react";
 import { Square } from "../square/Square";
 import "./Board.scss";
+import { Winner } from "../game/Game";
 
 interface BoardState {}
 interface BoardProps {
     squares: Array<string | null>;
-    winner: Array<number> | null;
+    winner: Winner | null;
     onClick: (idx: number) => void;
 }
 
@@ -25,7 +26,7 @@ class Board extends React.Component<BoardProps, BoardState> {
     }
 
     renderSquare(row: number, i: number) {
-        const highlight: boolean = this.props.winner ? this.props.winner.includes(i) : false;
+        const highlight: boolean = this.props.winner?.move?.includes(i) ?? false;
         return (
             <Square
                 key={`row-${row}-col-${i}`}

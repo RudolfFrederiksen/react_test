@@ -10,8 +10,13 @@ interface GameState {
     history: Array<HistoryState>;
     currentStep: number;
     xIsNext: boolean;
-    winner: Array<number> | null;
+    winner: Winner | null;
     orderMoveAsc: boolean;
+}
+
+export interface Winner {
+    player: string;
+    move: Array<number>;
 }
 
 interface HistoryState {
@@ -71,7 +76,7 @@ class Game extends React.Component<GameProps, GameState> {
         });
     }
 
-    calculateWinner(squares: Array<string | null>): Array<number> | null {
+    calculateWinner(squares: Array<string | null>): Winner | null {
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -85,7 +90,10 @@ class Game extends React.Component<GameProps, GameState> {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                return lines[i];
+                return {
+                    player: squares[a] as string,
+                    move: lines[i],
+                };
             }
         }
         return null;
@@ -131,7 +139,7 @@ class Game extends React.Component<GameProps, GameState> {
         const latestSquare = this.state.history[this.state.currentStep].squares,
             winner = this.state.winner,
             status = winner
-                ? t("GAME.WINNER") + winner // todo: fix winner name
+                ? t("GAME.WINNER") + winner.player
                 : this.state.history.length === 10 && !winner
                 ? t("GAME.DRAW")
                 : t("GAME.NEXT") + (this.state.xIsNext ? " X" : " O");
