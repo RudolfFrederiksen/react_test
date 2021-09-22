@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import "./LangSelector.scss";
 import { useTranslation } from "react-i18next";
 
-const LangSelector = () => {
+const LangSelector = memo(() => {
     const { t, i18n } = useTranslation();
     const [lang] = useState(i18n.language);
 
@@ -40,6 +40,6 @@ const LangSelector = () => {
             </select>
         </div>
     );
-};
+});
 
 export default LangSelector;
