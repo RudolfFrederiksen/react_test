@@ -1,28 +1,19 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import detector from "i18next-browser-languagedetector";
-
-import enTrans from "./i18n/en.json";
-import frTrans from "./i18n/fr.json";
+import backend from "i18next-xhr-backend";
 
 import "./index.scss";
 import Game from "./components/game/game/Game";
+import Loader from "./components/shared/Loader/Loader";
 
 i18n.use(detector)
+    .use(backend)
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
-        resources: {
-            en: {
-                translation: enTrans,
-            },
-            fr: {
-                translation: frTrans,
-            },
-        },
-        // lng: "fr", // if you're using a language detector, do not define the lng option
         fallbackLng: "en",
 
         interpolation: {
@@ -30,4 +21,9 @@ i18n.use(detector)
         },
     });
 
-ReactDOM.render(<Game />, document.getElementById("root"));
+ReactDOM.render(
+    <Suspense fallback={<Loader />}>
+        <Game />
+    </Suspense>,
+    document.getElementById("root")
+);
