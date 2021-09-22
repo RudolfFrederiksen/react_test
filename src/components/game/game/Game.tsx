@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { Board } from "../board/Board";
 import "./Game.scss";
 import Toggle from "../../shared/toggle/Toggle";
+import { WithTranslation, withTranslation } from "react-i18next";
 
 interface GameState {
     history: Array<HistoryState>;
@@ -18,7 +19,7 @@ interface HistoryState {
     row: number | null;
 }
 
-interface GameProps {}
+interface GameProps extends WithTranslation {}
 
 class Game extends React.Component<GameProps, GameState> {
     constructor(props: GameProps) {
@@ -36,6 +37,10 @@ class Game extends React.Component<GameProps, GameState> {
             winner: null,
             orderMoveAsc: true,
         };
+    }
+
+    componentDidMount() {
+        document.title = this.props.t("PAGE_TITLE");
     }
 
     handleClick(idx: number) {
@@ -128,21 +133,24 @@ class Game extends React.Component<GameProps, GameState> {
                 ? "Draw"
                 : "Next player: " + (this.state.xIsNext ? "X" : "O");
         return (
-            <div className="game">
-                <div className="game-board">
-                    <Board squares={latestSquare} winner={winner} onClick={(idx) => this.handleClick(idx)} />
-                </div>
-                <div className="game-info">
-                    <div className="status">{status}</div>
-                    <div className="history-toggle">
-                        <Toggle isActive={this.state.orderMoveAsc} onClick={() => this.toggleHistoryOrder()} />
-                        <span>History Order : {this.state.orderMoveAsc ? "Ascending" : "Descending"}</span>
+            <div>
+                <h2>{this.props.t("GAME.TITLE")}</h2>
+                <div className="game">
+                    <div className="game-board">
+                        <Board squares={latestSquare} winner={winner} onClick={(idx) => this.handleClick(idx)} />
                     </div>
-                    <ol reversed={!this.state.orderMoveAsc}>{this.renderHistory()}</ol>
+                    <div className="game-info">
+                        <div className="status">{status}</div>
+                        <div className="history-toggle">
+                            <Toggle isActive={this.state.orderMoveAsc} onClick={() => this.toggleHistoryOrder()} />
+                            <span>History Order : {this.state.orderMoveAsc ? "Ascending" : "Descending"}</span>
+                        </div>
+                        <ol reversed={!this.state.orderMoveAsc}>{this.renderHistory()}</ol>
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export { Game };
+export default withTranslation()(Game);

@@ -1,0 +1,6 @@
+{
+    "PAGE_TITLE": "Tic Tac Toe test app",
+    "GAME": {
+        "TITLE": "Basic game app to test various things in React"
+    }
+}
